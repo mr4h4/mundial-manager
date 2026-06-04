@@ -17,7 +17,7 @@ const ROUND_KEYS = [
   { key: 'final',         label: 'Final' },
 ];
 
-function MatchCard({ match, countries, highlighted }) {
+function MatchCard({ match, countries, highlighted, showGoals }) {
   const getCode = (name) => countries.find(c => c.name === name)?.code || 'un';
   const winnerA = match.winner === match.teamA;
   const winnerB = match.winner === match.teamB;
@@ -27,14 +27,16 @@ function MatchCard({ match, countries, highlighted }) {
       <CardContent className="p-0">
         <div className={`flex items-center gap-3 px-4 py-3 ${winnerA ? 'bg-primary/10' : ''}`}>
           <FlagImage code={getCode(match.teamA)} name={match.teamA} size="sm" />
-          <span className={`flex-1 text-sm truncate ${winnerA ? 'font-bold' : ''}`}>{match.teamA}</span>
-          {winnerA && <Trophy className="w-4 h-4 text-accent shrink-0" />}
+          <span className={`flex-1 text-sm truncate ${winnerA ? 'font-bold text-primary' : ''}`}>{match.teamA}</span>
+          {showGoals && match.played && <span className="font-heading text-lg font-bold">{match.goalsA ?? '-'}</span>}
+          {!showGoals && winnerA && <Trophy className="w-4 h-4 text-accent shrink-0" />}
         </div>
         <div className="border-t border-border" />
         <div className={`flex items-center gap-3 px-4 py-3 ${winnerB ? 'bg-primary/10' : ''}`}>
           <FlagImage code={getCode(match.teamB)} name={match.teamB} size="sm" />
-          <span className={`flex-1 text-sm truncate ${winnerB ? 'font-bold' : ''}`}>{match.teamB}</span>
-          {winnerB && <Trophy className="w-4 h-4 text-accent shrink-0" />}
+          <span className={`flex-1 text-sm truncate ${winnerB ? 'font-bold text-primary' : ''}`}>{match.teamB}</span>
+          {showGoals && match.played && <span className="font-heading text-lg font-bold">{match.goalsB ?? '-'}</span>}
+          {!showGoals && winnerB && <Trophy className="w-4 h-4 text-accent shrink-0" />}
         </div>
       </CardContent>
     </Card>
@@ -113,7 +115,7 @@ function GroupsTab({ tournament }) {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {jornadaMatches.map(match => (
-                  <MatchCard key={match.id} match={match} countries={countries} />
+                  <MatchCard key={match.id} match={match} countries={countries} showGoals />
                 ))}
               </div>
             </div>
