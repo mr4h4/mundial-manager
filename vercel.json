@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd 'FIFA World Cup Simulator' && npm run build",
+  "installCommand": "cd 'FIFA World Cup Simulator' && npm install",
+  "outputDirectory": "FIFA World Cup Simulator/dist",
+  "framework": "vite"
+}
